@@ -19,8 +19,8 @@
 
             <form class="login-form" id="loginForm">
                 <div class="input-group">
-                    <i class="fa-regular fa-envelope input-icon" style="color:white;" ></i>
-                    <input type="email" class="login-input" id="email" placeholder="Enter Your Mail I'd" required >
+                    <i class="fa-regular fa-envelope input-icon" style="color:white;"></i>
+                    <input type="email" class="login-input" id="email" placeholder="Enter Your Mail I'd" required>
                 </div>
 
                 <div class="input-group">
@@ -55,76 +55,76 @@
     </div>
 
     <script>
-        const API_BASE = 'http://localhost:8080';
+        const API_BASE = 'https://medical-billing-system.onrender.com';
 
         // Login form submission
-            document.getElementById('loginForm').addEventListener('submit', async function (e) {
-                e.preventDefault();
+        document.getElementById('loginForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
 
-                const email = document.getElementById('email').value;
-                const password = document.getElementById('password').value;
-                const loginBtn = document.getElementById('loginBtn');
-                const loginBtnText = document.getElementById('loginBtnText');
-                const loginSpinner = document.getElementById('loginSpinner');
-                const errorMessage = document.getElementById('errorMessage');
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const loginBtn = document.getElementById('loginBtn');
+            const loginBtnText = document.getElementById('loginBtnText');
+            const loginSpinner = document.getElementById('loginSpinner');
+            const errorMessage = document.getElementById('errorMessage');
 
-                // Show loading state
-                loginBtn.disabled = true;
-                loginBtnText.classList.add('hidden');
-                loginSpinner.classList.remove('hidden');
-                errorMessage.classList.add('hidden');
+            // Show loading state
+            loginBtn.disabled = true;
+            loginBtnText.classList.add('hidden');
+            loginSpinner.classList.remove('hidden');
+            errorMessage.classList.add('hidden');
 
-                try {
-                    const response = await fetch(`${API_BASE}/user/login`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            email: email,
-                            password: password
-                        })
-                    });
-
-                    const text = await response.text();
-
-                    if (response.ok && text.includes("Login Successful")) {
-                        // Fake token for demonstration, since backend doesn't send one
-                        const dummyToken = 'dummy-auth-token';
-                        const dummyUser = { email };
-
-                        localStorage.setItem('authToken', dummyToken);
-                        localStorage.setItem('user', JSON.stringify(dummyUser));
-
-                        // Redirect to dashboard
-                        window.location.href = 'index.html';
-                    } else {
-                        throw new Error(text);
-                    }
-                } catch (error) {
-                    console.error('Login error:', error);
-                    errorMessage.textContent = error.message || 'Login failed. Please try again.';
-                    errorMessage.classList.remove('hidden');
-                } finally {
-                    // Reset button state
-                    loginBtn.disabled = false;
-                    loginBtnText.classList.remove('hidden');
-                    loginSpinner.classList.add('hidden');
-                }
-            });
-
-            const passwordInput = document.getElementById("password");
-                const toggleButton = document.getElementById("passwordToggle");
-                const eyeIcon = document.getElementById("eyeIcon");
-                const eyeOffIcon = document.getElementById("eyeOffIcon");
-
-                toggleButton.addEventListener("click", function () {
-                    const isPassword = passwordInput.getAttribute("type") === "password";
-                    passwordInput.setAttribute("type", isPassword ? "text" : "password");
-
-                    eyeIcon.classList.toggle("hidden", !isPassword);
-                    eyeOffIcon.classList.toggle("hidden", isPassword);
+            try {
+                const response = await fetch(`${API_BASE}/user/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    })
                 });
+
+                const text = await response.text();
+
+                if (response.ok && text.includes("Login Successful")) {
+                    // Fake token for demonstration, since backend doesn't send one
+                    const dummyToken = 'dummy-auth-token';
+                    const dummyUser = { email };
+
+                    localStorage.setItem('authToken', dummyToken);
+                    localStorage.setItem('user', JSON.stringify(dummyUser));
+
+                    // Redirect to dashboard
+                    window.location.href = 'index.html';
+                } else {
+                    throw new Error(text);
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                errorMessage.textContent = error.message || 'Login failed. Please try again.';
+                errorMessage.classList.remove('hidden');
+            } finally {
+                // Reset button state
+                loginBtn.disabled = false;
+                loginBtnText.classList.remove('hidden');
+                loginSpinner.classList.add('hidden');
+            }
+        });
+
+        const passwordInput = document.getElementById("password");
+        const toggleButton = document.getElementById("passwordToggle");
+        const eyeIcon = document.getElementById("eyeIcon");
+        const eyeOffIcon = document.getElementById("eyeOffIcon");
+
+        toggleButton.addEventListener("click", function () {
+            const isPassword = passwordInput.getAttribute("type") === "password";
+            passwordInput.setAttribute("type", isPassword ? "text" : "password");
+
+            eyeIcon.classList.toggle("hidden", !isPassword);
+            eyeOffIcon.classList.toggle("hidden", isPassword);
+        });
     </script>
 </body>
 
